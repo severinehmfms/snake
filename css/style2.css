@@ -1,0 +1,16 @@
+body {
+    font-family: system-ui, sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    padding: 24px;
+}
+canvas {
+    border: 2px solid #333;
+    background: #fafafa;
+}
+#score {
+    font-size: 20px;
+    font-weight: bold;
+}

@@ -20,7 +20,6 @@ let food = {
     y: 100
 };
 
-
 //On choisit la direction de base
 let direction = "RIGHT";
 
