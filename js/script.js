@@ -3,25 +3,14 @@ const context = canvas.getContext("2d");
 
 const restartButton = document.getElementById("restart");
 
-let score = 0;
+let score;
+let gameOver;
+let snake = [];
+let food = {};
+let direction;
 
-let gameOver = false;
-
-//On définit l'emplacement de base du serpent
-let snake = [
-    { x: 200, y: 200 },
-    { x: 180, y: 200 },
-    { x: 160, y: 200 }
-];
-
-//On définit l'emplacement de base de la nourriture
-let food = {
-    x: 100,
-    y: 100
-};
-
-//On choisit la direction de base
-let direction = "RIGHT";
+//On initialise la partie
+initGame();
 
 //On dessine le serpent
 drawSnake();
@@ -29,24 +18,17 @@ drawSnake();
 //On ajoute un évènement sur le bouton restart
 restartButton.addEventListener("click", function() {
 
-    snake = [
-        { x: 200, y: 200 },
-        { x: 180, y: 200 },
-        { x: 160, y: 200 }
-    ];
+    //On initialise la partie
+    initGame();
 
-    direction = "RIGHT";
-
-    score = 0;
-
-    gameOver = false;
-
+    //On met à jour le score (à 0)
     document.getElementById("score").textContent = score;
 
+    //On génère la nourriture
     generateFood();
 
+    //On affiche tout :-)
     draw();
-
 });
 
 //On ajoute un évènement sur les touches du clavier, pour changer la direction du serpent
@@ -79,15 +61,38 @@ setInterval(function () {
 
         moveSnake();
         draw();
-
     }
 
 }, 150);
+
+//Initialise la partie
+function initGame(){
+    score = 0;
+
+    gameOver = false;
+
+    //On définit l'emplacement de base du serpent
+    snake = [
+        { x: 200, y: 200 },
+        { x: 180, y: 200 },
+        { x: 160, y: 200 }
+    ];
+
+    //On définit l'emplacement de base de la nourriture
+    food = {
+        x: 100,
+        y: 100
+    };
+
+    //On choisit la direction de base
+    direction = "RIGHT";
+}
 
 
 //Fonction qui efface l'ancien dessin et appelle la fonction pour dessiner le nouveau serpent et la nourriture
 function draw() {
 
+    //On efface le canvas
     context.clearRect(
         0,
         0,
@@ -193,7 +198,7 @@ function moveSnake() {
 
 }
 
-//Fonction qui génère de façon aléatoire la nourriture
+//Fonction qui génère de façon aléatoire la nourriture (coordonnées x et y du pixel représentant la nourriture)
 function generateFood() {
 
     food.x = Math.floor(Math.random() * 20) * 20;
